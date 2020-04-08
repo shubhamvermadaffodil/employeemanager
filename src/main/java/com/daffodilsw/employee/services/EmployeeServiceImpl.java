@@ -61,13 +61,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 	 * @return the employee object
 	 */
 	public Employee updateEmployee(Integer id, Employee employeeData) {
-		employeeData.setId(id);
-//		Optional<Employee> employee = findEmployeeById(id);//.orElse(()->new EmployeeNotFoundException());
-//		Employee emp = employee.get();
-//		emp.setFirstName(employeeData.getFirstName());
-//		emp.setLastName(employeeData.getLastName());
 		
-		return employeeRepository.save(employeeData);
+		Employee employee = employeeRepository.findById(id).orElseThrow(()->new EmployeeNotFoundException("Employee not found"));
+		
+		employee.setFirstName(employeeData.getFirstName()!=null?employeeData.getFirstName():employee.getFirstName());
+		employee.setLastName(employeeData.getLastName()!=null?employeeData.getLastName():employee.getLastName());
+		
+		return employeeRepository.save(employee);
 	}
 
 }
