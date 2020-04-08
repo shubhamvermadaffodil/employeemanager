@@ -19,4 +19,5 @@ public class Constants {
 
 	/* URLS*/
 	public static final String URL_EMPLOYEES = "/employees";
+	public static final String URL_DEPRTMENTS = "/departments";
 }
