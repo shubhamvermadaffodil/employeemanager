@@ -1,6 +1,7 @@
 package com.daffodilsw.employee.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +26,11 @@ import com.daffodilsw.employee.services.EmployeeService;
  */
 @RestController
 public class EmployeeController {
-	 
+  
 	/** The employee service. */
 	@Autowired
 	private EmployeeService empService;
-	
+
 	/**
 	 * Gets the employees List from database.
 	 *
@@ -39,7 +41,7 @@ public class EmployeeController {
 		List<Employee> employees = empService.findAllEmployees();
 		return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Save user to the database.
 	 *
@@ -60,10 +62,28 @@ public class EmployeeController {
 	 * @param id the id
 	 * @return the employee object for provided id.
 	 */
-	@GetMapping(Constants.URL_EMPLOYEES+"/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id){
-		Employee employee = empService.findEmployeeById(id);
-		return new ResponseEntity<Employee>(employee, HttpStatus.OK); 
+	@GetMapping(Constants.URL_EMPLOYEES + "/{id}")
+	public @ResponseBody ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable Integer id) {
+
+		Optional<Employee> employee = empService.findEmployeeById(id);
+		HttpStatus status = HttpStatus.OK;
+		if (!employee.isPresent()) {
+			status = HttpStatus.NOT_FOUND;
+		}
+		return new ResponseEntity<Optional<Employee>>(employee, status);
+
 	}
-	
+
+	/**
+	 * Update employee.
+	 *
+	 * @param employee the employee
+	 * @return
+	 */
+	@PutMapping(Constants.URL_EMPLOYEES + "/{id}")
+	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee newEmployee, @PathVariable Integer id) {
+		Employee employeeData = empService.updateEmployee(id, newEmployee);
+		return new ResponseEntity<Employee>(employeeData, HttpStatus.OK);
+	}
+
 }

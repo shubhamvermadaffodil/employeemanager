@@ -1,8 +1,10 @@
 package com.daffodilsw.employee.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import com.daffodilsw.employee.models.Employee;
@@ -47,8 +49,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 	 * @param id the id
 	 * @return the employee
 	 */
-	public Employee findEmployeeById(Integer id){
-		return employeeRepository.getOne(id);
+	public Optional<Employee> findEmployeeById(Integer id){
+		return employeeRepository.findById(id);
+	} 
+	
+	/**
+	 * Update employee by id and employeeData need to be updated.
+	 * @param id the id
+	 * @param employeeData the employeeData
+	 * @return the employee object
+	 */
+	public Employee updateEmployee(Integer id, Employee employeeData) {
+		return new Employee();
 	}
 
 }

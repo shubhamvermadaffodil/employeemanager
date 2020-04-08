@@ -1,6 +1,7 @@
 package com.daffodilsw.employee.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.daffodilsw.employee.models.Employee;
 
@@ -31,6 +32,13 @@ public interface EmployeeService {
 	 * @param id the id
 	 * @return the employee object
 	 */
-	public Employee findEmployeeById(Integer id);
+	public Optional<Employee> findEmployeeById(Integer id);
 	
+	/**
+	 * Update employee instance into db and returns the updated instant
+	 *
+	 * @param employee the employee
+	 * @return the employee object
+	 */
+	public Employee updateEmployee(Integer id, Employee employee);
 }
