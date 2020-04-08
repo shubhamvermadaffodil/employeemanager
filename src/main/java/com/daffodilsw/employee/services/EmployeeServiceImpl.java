@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Service;
 
+import com.daffodilsw.employee.exceptions.EmployeeNotFoundException;
 import com.daffodilsw.employee.models.Employee;
 import com.daffodilsw.employee.repositories.EmployeeRepository;
 
@@ -60,7 +61,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 	 * @return the employee object
 	 */
 	public Employee updateEmployee(Integer id, Employee employeeData) {
-		return new Employee();
+		employeeData.setId(id);
+//		Optional<Employee> employee = findEmployeeById(id);//.orElse(()->new EmployeeNotFoundException());
+//		Employee emp = employee.get();
+//		emp.setFirstName(employeeData.getFirstName());
+//		emp.setLastName(employeeData.getLastName());
+		
+		return employeeRepository.save(employeeData);
 	}
 
 }
