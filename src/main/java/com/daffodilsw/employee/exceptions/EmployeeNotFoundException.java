@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class EmployeeNotFoundException  extends RuntimeException{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4418400073875155224L;
+
+	/**
 	 * Instantiates a new constructor for employee not found exception.
 	 */
 	public EmployeeNotFoundException(){
