@@ -5,8 +5,6 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.daffodilsw.employee.models.EmployeeDepartment;
-
 /**
  * The Class EmployeeTO.
  */

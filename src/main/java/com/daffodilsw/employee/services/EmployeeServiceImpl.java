@@ -1,20 +1,17 @@
 package com.daffodilsw.employee.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import com.daffodilsw.employee.exceptions.EmployeeNotFoundException;
 import com.daffodilsw.employee.models.Department;
 import com.daffodilsw.employee.models.Employee;
-import com.daffodilsw.employee.models.EmployeeDepartment;
 import com.daffodilsw.employee.repositories.DepartmentRepository;
-import com.daffodilsw.employee.repositories.EmployeeDepartmentRepository;
+
 import com.daffodilsw.employee.repositories.EmployeeRepository;
 import com.daffodilsw.employee.to.EmployeeTO;
 
@@ -34,8 +31,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Autowired
 	private DepartmentRepository departmentRepository;
 	
-	@Autowired
-	private EmployeeDepartmentRepository employeeDepartmentRepository;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -57,21 +52,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 	 */
 	public Employee saveEmployee(EmployeeTO employee) {
 	
-		Employee emp = modelMapper.map(employee, Employee.class);
-		List<EmployeeDepartment> employeeDepartments = new ArrayList<>();
-		Employee empDoc = employeeRepository.save(emp);
-		
-		employee.getDepartment().forEach((d)-> {
-			Department dpt = departmentRepository.findById(d).orElseThrow(()->new EmployeeNotFoundException());
-			
-			EmployeeDepartment empDpt = new EmployeeDepartment();
-			empDpt.setDepartment(dpt);
-			empDpt.setEmployee(empDoc);
-			
-			employeeDepartments.add(empDpt);
-		});
-		employeeDepartmentRepository.saveAll(employeeDepartments);
-		return empDoc;
+		Employee emp = modelMapper.map(employee, Employee.class);	
+		List<Department> departments = departmentRepository.findAllById(employee.getDepartment());
+		emp.setDepartments(departments);
+		return employeeRepository.save(emp);
 	}
 
 	/**
