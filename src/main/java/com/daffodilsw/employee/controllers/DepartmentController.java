@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.daffodilsw.employee.constants.Constants;
 import com.daffodilsw.employee.models.Department;
 import com.daffodilsw.employee.services.DepartmentService;
+import com.daffodilsw.employee.to.DepartmentTO;
 
 /**
  * The Class DepartmentController handling REST routes for departments
@@ -64,7 +65,7 @@ public class DepartmentController {
 	 * @return the response entity
 	 */
 	@PostMapping(Constants.URL_DEPRTMENTS)
-	public @ResponseBody ResponseEntity<Department> saveDepartment(@Valid @RequestBody Department department) {
+	public @ResponseBody ResponseEntity<Department> saveDepartment(@Valid @RequestBody DepartmentTO department) {
 		return new ResponseEntity<Department>(departmentService.saveDepartment(department), HttpStatus.OK);
 	}
 
@@ -76,7 +77,7 @@ public class DepartmentController {
 	 * @return the response entity
 	 */
 	@PutMapping(Constants.URL_DEPRTMENTS + "/{id}")
-	public ResponseEntity<Department> updateDepartment(@RequestBody Department department, @PathVariable Integer id) {
+	public ResponseEntity<Department> updateDepartment(@RequestBody DepartmentTO department, @PathVariable Integer id) {
 		Department departmentData = departmentService.updateDepartment(id, department);
 		return new ResponseEntity<Department>(departmentData, HttpStatus.OK);
 	}

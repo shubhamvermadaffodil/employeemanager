@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.daffodilsw.employee.models.Department;
+import com.daffodilsw.employee.to.DepartmentTO;
 
 /**
  * The Interface DepartmentService.
@@ -23,7 +24,7 @@ public interface DepartmentService{
 	 * @param department the department
 	 * @return the department
 	 */
-	public Department saveDepartment(Department department);
+	public Department saveDepartment(DepartmentTO department);
 	
 	/**
 	 * Find department by id.
@@ -40,5 +41,5 @@ public interface DepartmentService{
 	 * @param department the department
 	 * @return the department
 	 */
-	public Department updateDepartment(Integer id, Department department);
+	public Department updateDepartment(Integer id, DepartmentTO department);
 }
