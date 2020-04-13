@@ -3,6 +3,7 @@ package com.daffodilsw.employee.to;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,8 +18,9 @@ public class EmployeeTO {
 	
 	/** The last name. */
 	private String lastName;
-	
+
 	/** The deparment. */
+	@NotEmpty(message = "At least one deaprtment should be linked with employee.")
 	private List<Integer> department;
 	
 	public List<Integer> getDepartment() {
